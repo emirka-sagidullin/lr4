@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Изменение статьи</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            <label>Введите название фильма</label><br>
+            <input type="text" name="name" value="{{film.name}}">
+        </p>
+        <p>
+            <label>Введите актерский состав</label><br>
+            <textarea name="actors" value="{{film.actors}}"  cols="30" rows="10"></textarea>
+        </p>
+        <p>
+            <label>Выберите жанр</label><br>
+            <select name="category">
+                {% for category in categories %}
+                <option value="{{ category.id }}"
+                    {% if category.id == film.category_id %}
+                    selected
+                    {% endif %}>
+                    {{ category.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label>Выберите дату релиза</label>
+            <input type="date" name="date_release">
+        </p>
+        <p>
+            <label>Выберите дату показа</label>
+            <input type="date" name="date_show">
+        </p>
+        <p>
+            <label>Постер</label>
+            <input type="file" name="image" accept="image/*">
+        </p>
+        <input type="submit" value="Сохранить">
+    </form>
+</body>
+</html>
